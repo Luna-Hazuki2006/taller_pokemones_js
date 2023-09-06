@@ -1,8 +1,18 @@
 let url = 'https://pokeapi.co/api/v2/pokemon/'
-const paginas = document.getElementById('paginacion')
-const lista = document.getElementById('lista')
 let original = []
 let objetosCompletos = []
+
+function cargarLogin() {
+    
+}
+
+function cargarRegistro() {
+    
+}
+
+function cargarTareas() {
+    
+}
 
 async function obtenerTodos() {
     if (comprobar()) {
@@ -70,34 +80,6 @@ async function obtenerMovimientos(campo) {
     }
     const data = await respuesta.json()
     return [...data]
-}
-
-function limpiar() {
-    let borradas = document.querySelectorAll('#paginacion a:not(.flechas)')
-    for (let i = borradas.length - 1; i >= 0; i--) {
-        paginas.removeChild(borradas[i])
-    }
-}
-
-function filtrar() {
-    console.log('incluso aqui');
-    let filtrado = document.getElementById('filtrado').value
-    let ver = []
-    for (const esto of objetosCompletos) {
-        if (String(esto['name']).includes(filtrado)) {
-            console.log(esto['name']);
-            let pokemon = document.getElementById(esto['id'])
-            ver.push(pokemon)
-        }
-    }
-    let todos = document.querySelectorAll('#lista div')
-    for (const esto of todos) {
-        if (ver.indexOf(esto) == -1) {
-            esto.classList.add('invisible')
-        } else {
-            esto.classList.remove('invisible')
-        }
-    }
 }
 
 obtenerTodos()
