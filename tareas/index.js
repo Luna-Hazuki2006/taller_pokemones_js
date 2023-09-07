@@ -1,37 +1,93 @@
-function cargar() {
-    let form = document.querySelector('form')
-    form.addEventListener('submit', async (event) => {
-        event.preventDefault()
-        let data = new FormData(form)
-        let nombre = data.get('nombre')
-        let apellido = data.get('apellido')
-        let correo = data.get('correo')
-        let clave = data.get('contraseña')
-        try {
-            const respuesta = await fetch('https://graco-api.onrender.com/registrar', {
-                method: 'POST', 
-                headers: {
-                    'Content-Type': 'application/json'
-                }, 
-                body: JSON.stringify({
-                    'name': nombre, 
-                    'lastname': apellido, 
-                    'email': correo, 
-                    'password': clave
-                })
-            })
-            const verdad = await respuesta.json()
-            if (verdad['success']) {
-                console.log(verdad);
-                console.log('felicidades');
-                alert('Felicidades, usuario registrado')
-                location.href = '../'   
+let pokedex = []
+let vistaPokedex = document.getElementById('pokedex')
+
+async function cargar() {
+    if (localStorage.getItem('token') == undefined || 
+        localStorage.getItem('token') == null) {
+        alert('Necesita iniciar sesión para acceder aquí, lo siento :(')
+        location.href = '../'
+    }
+    await consultarPokedex()
+    let bottonAtrapar = document.querySelector('#atrapar button')
+    console.log(bottonAtrapar);
+    bottonAtrapar.addEventListener('click', encontrarPokemon)
+}
+
+async function consultarPokedex() {
+    try {
+        console.log('Tu pokedex');
+        const respuesta = await fetch('https://graco-api.onrender.com/pokedex', {
+            method: 'GET', 
+            headers: {
+                'Authorization': localStorage.getItem('token')
             }
-        } catch (error) {
-            console.error(error)
-            alert('Ha sucedido un error pero no preocupes, no es tu culpa :D')
-        }
-    })
+        })
+        const lista = await respuesta.json()
+        console.log(lista);
+        console.log(lista['data']);
+        pokedex = lista['data']
+        mostrarPokedex()
+    } catch (error) {
+        console.error(error)
+        alert('Disculpa, ocurrió un error al consultar la pokedex')
+    } 
+}
+
+function mostrarPokedex() {
+    vistaPokedex.innerHTML = ''
+    let indices = Object.keys(pokedex)
+    for (const pokemon of pokedex) {
+        for (const esto of indices) {
+            let p = document.createElement('p')
+            p.innerText = esto + ': ' + pokemon[esto]
+            vistaPokedex.appendChild(p)
+        }   
+    }
+}
+
+async function encontrarPokemon() {
+    try {
+        console.log('vas a encontrar un pokemon');
+        const respuesta = await fetch('https://graco-api.onrender.com/solicitarPokemon', {
+            method: 'POST', 
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        })
+        const pokemon = await respuesta.json()
+        console.log(pokemon);
+        console.log(pokemon['data']);
+        await atraparPokemon(pokemon['data']['id'])
+        console.log('felicidades');
+        alert('felicidades, te econtraste con un pokemón')
+    } catch (error) {
+        console.error(error)
+        alert('Disculpa, ocurrió un erro al atrapar al pokemón')
+    }
+}
+
+async function atraparPokemon(id) {
+    try {
+        console.log('vas atrapar un pokemon');
+        const respuesta = await fetch('https://graco-api.onrender.com/solicitarPokemon', {
+            method: 'POST', 
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }, 
+            body: JSON.stringify({
+                'id': 38, 
+                'estado': 2
+            })
+        })
+        const pokemon = await respuesta.json()
+        console.log(pokemon);
+        console.log('felicidades');
+        alert('felicidades, atrapaste un pokemón')
+        await consultarPokedex()
+    } catch (error) {
+        console.error(error)
+        alert('Disculpa, ocurrió un erro al atrapar al pokemón')
+    }
 }
 
 async function prueba() {

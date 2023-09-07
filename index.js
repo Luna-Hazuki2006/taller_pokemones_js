@@ -19,6 +19,7 @@ function cargar() {
             const verdad = await respuesta.json()
             if (verdad['success']) {
                 let jwt = verdad['data']['token']
+                console.log(jwt);
                 localStorage.setItem('token', jwt)
                 console.log('felicidades');
                 alert('Felicidades, inicio de sesión exitoso')
