@@ -21,12 +21,15 @@ function cargar() {
                 })
             })
             const verdad = await respuesta.json()
-            const jwt = verdad.token
-            localStorage.setItem('token', jwt)
-            console.log('felicidades');
-            location.href = '../'
+            if (verdad['success']) {
+                console.log(verdad);
+                console.log('felicidades');
+                alert('Felicidades, usuario registrado')
+                location.href = '../'   
+            }
         } catch (error) {
             console.error(error)
+            alert('Ha sucedido un error pero no preocupes, no es tu culpa :D')
         }
     })
 }
