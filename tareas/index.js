@@ -26,7 +26,8 @@ async function consultarPokedex() {
         console.log(lista);
         console.log(lista['data']);
         pokedex = lista['data']
-        mostrarPokedex()
+        console.log(pokedex);
+        // mostrarPokedex()
     } catch (error) {
         console.error(error)
         alert('Disculpa, ocurrió un error al consultar la pokedex')
@@ -35,7 +36,7 @@ async function consultarPokedex() {
 
 function mostrarPokedex() {
     vistaPokedex.innerHTML = ''
-    let indices = Object.keys(pokedex)
+    let indices = Object.keys(pokedex[0])
     for (const pokemon of pokedex) {
         for (const esto of indices) {
             let p = document.createElement('p')
@@ -75,7 +76,7 @@ async function atraparPokemon(id) {
                 'Authorization': localStorage.getItem('token')
             }, 
             body: JSON.stringify({
-                'id': 38, 
+                'id': id, 
                 'estado': 2
             })
         })
