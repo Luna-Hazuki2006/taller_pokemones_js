@@ -47,7 +47,7 @@ function mostrarPokedex() {
         img.src = pokemon['image']
         if (String(pokemon['estado']) == '0' || 
             String(pokemon['estado']) == '1') {
-            div.classList.add('presente')
+            div.classList.add('ocultar')
         } else {
             div.classList.add('presente')
         }
