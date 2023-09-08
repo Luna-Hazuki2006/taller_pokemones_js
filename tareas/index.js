@@ -19,15 +19,16 @@ async function consultarPokedex() {
         const respuesta = await fetch('https://graco-api.onrender.com/pokedex', {
             method: 'GET', 
             headers: {
-                'Authorization': localStorage.getItem('token')
+                'Authorization': JSON.stringify(localStorage.getItem('token')), 
             }
         })
         const lista = await respuesta.json()
+
         console.log(lista);
         console.log(lista['data']);
         pokedex = lista['data']
         console.log(pokedex);
-        // mostrarPokedex()
+        mostrarPokedex()
     } catch (error) {
         console.error(error)
         alert('Disculpa, ocurrió un error al consultar la pokedex')
