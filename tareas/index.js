@@ -47,8 +47,10 @@ function mostrarPokedex() {
         img.src = pokemon['image']
         if (String(pokemon['estado']) == '0' || 
             String(pokemon['estado']) == '1') {
-            img.classList.add('ocultar')   
-        } 
+            div.classList.add('presente')
+        } else {
+            div.classList.add('presente')
+        }
         div.appendChild(img)
         vistaPokedex.appendChild(div)
     }
