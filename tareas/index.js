@@ -10,7 +10,9 @@ async function cargar() {
     await consultarPokedex()
     let bottonAtrapar = document.querySelector('#atrapar button')
     console.log(bottonAtrapar);
-    bottonAtrapar.addEventListener('click', encontrarPokemon)
+    bottonAtrapar.addEventListener('click', async () => {
+        await encontrarPokemon()
+    })
 }
 
 async function consultarPokedex() {
@@ -23,7 +25,7 @@ async function consultarPokedex() {
             }
         })
         const lista = await respuesta.json()
-
+        console.log('La pokedex');
         console.log(lista);
         console.log(lista['data']);
         pokedex = lista['data']
@@ -31,7 +33,8 @@ async function consultarPokedex() {
         mostrarPokedex()
     } catch (error) {
         console.error(error)
-        alert('Disculpa, ocurrió un error al consultar la pokedex')
+        alert('Disculpa, ocurrió un error al atrapar al pokemón\nTrata de iniciar sesión de nuevo')
+        location.href = '../'
     } 
 }
 
@@ -39,11 +42,15 @@ function mostrarPokedex() {
     vistaPokedex.innerHTML = ''
     let indices = Object.keys(pokedex[0])
     for (const pokemon of pokedex) {
-        for (const esto of indices) {
-            let p = document.createElement('p')
-            p.innerText = esto + ': ' + pokemon[esto]
-            vistaPokedex.appendChild(p)
-        }   
+        let div = document.createElement('div')
+        let img = document.createElement('img')
+        img.src = pokemon['image']
+        if (String(pokemon['estado']) == '0' || 
+            String(pokemon['estado']) == '1') {
+            img.classList.add('ocultar')   
+        } 
+        div.appendChild(img)
+        vistaPokedex.appendChild(div)
     }
 }
 
@@ -57,38 +64,54 @@ async function encontrarPokemon() {
             }
         })
         const pokemon = await respuesta.json()
-        console.log(pokemon);
-        console.log(pokemon['data']);
-        await atraparPokemon(pokemon['data']['id'])
-        console.log('felicidades');
-        alert('felicidades, te econtraste con un pokemón')
+        if (pokemon['success']) {
+            console.log(pokemon);
+            console.log(pokemon['data']);
+            console.log('felicidades');
+            alert('felicidades, te econtraste con un pokemón')
+            await atraparPokemon(pokemon['data']['id'])
+        } else {
+            console.log('No se pudo encontrar el pokemon');
+            alert('¡Oh no! no pudiste encontrar un pokemon')
+        }
     } catch (error) {
         console.error(error)
-        alert('Disculpa, ocurrió un erro al atrapar al pokemón')
+        alert('Disculpa, ocurrió un error al atrapar al pokemón\nTrata de iniciar sesión de nuevo')
     }
 }
 
 async function atraparPokemon(id) {
     try {
         console.log('vas atrapar un pokemon');
-        const respuesta = await fetch('https://graco-api.onrender.com/solicitarPokemon', {
-            method: 'POST', 
+        alert('Pero... ¿Atraparás al pokemon?')
+        const respuesta = await fetch('https://graco-api.onrender.com/atrapar', {
+            method: 'PUT', 
             headers: {
                 'Authorization': localStorage.getItem('token')
             }, 
             body: JSON.stringify({
                 'id': id, 
-                'estado': 2
+                'estado': '2'
             })
         })
         const pokemon = await respuesta.json()
         console.log(pokemon);
         console.log('felicidades');
         alert('felicidades, atrapaste un pokemón')
-        await consultarPokedex()
+        await consultarPokedex()   
+        // if (respuesta['success']) {
+        //     const pokemon = await respuesta.json()
+        //     console.log(pokemon);
+        //     console.log('felicidades');
+        //     alert('felicidades, atrapaste un pokemón')
+        //     await consultarPokedex()
+        // } else {
+        //     alert('¡Oh no! El pokemón escapó :(')
+        //     console.log('Se escapó :(');
+        // }
     } catch (error) {
         console.error(error)
-        alert('Disculpa, ocurrió un erro al atrapar al pokemón')
+        alert('Oh no, el pokemon escapó')
     }
 }
 
