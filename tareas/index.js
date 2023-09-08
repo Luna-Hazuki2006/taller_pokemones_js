@@ -95,6 +95,7 @@ async function atraparPokemon(id) {
             })
         })
         const pokemon = await respuesta.json()
+        console.log('Esto es el pokemon');
         console.log(pokemon);
         console.log('felicidades');
         alert('felicidades, atrapaste un pokemón')

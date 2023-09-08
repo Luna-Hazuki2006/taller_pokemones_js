@@ -23,7 +23,7 @@ function cargar() {
                 localStorage.setItem('token', jwt)
                 console.log('felicidades');
                 alert('Felicidades, inicio de sesión exitoso')
-                location.href = '../'   
+                location.href = '/tareas/'   
             }
         } catch (error) {
             console.error(error)
