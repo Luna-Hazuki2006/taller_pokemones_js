@@ -190,3 +190,11 @@ header li a:hover {
     border-radius: 10px;
     padding: 10px;
 }
+
+#encontrar button:hover {
+    cursor: pointer;
+}
+
+.encontrado {
+    border: 2px solid red;
+}

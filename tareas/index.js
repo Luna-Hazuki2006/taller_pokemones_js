@@ -72,6 +72,22 @@ function mostrarPokedex() {
         div.appendChild(img)
         vistaPokedex.appendChild(div)
     }
+    let encontrar = document.getElementById('encontrar')
+    let data = new FormData(encontrar)
+    let busqueda = data.get('buscar')
+    let boton = document.querySelector('#encontrar button')
+    boton.addEventListener('click', (event) => {
+        event.preventDefault()
+        for (const esto of pokedex) {
+            if (String(esto['name']).includes(busqueda) || 
+                String(esto['id'].includes(busqueda)) || 
+                String(esto['type']).includes(busqueda)) {
+                let nuevo = document.getElementById(esto['id'])
+                console.log(nuevo);
+                nuevo.classList.add('encontrado')
+            }
+        }
+    })
 }
 
 async function encontrarPokemon() {
