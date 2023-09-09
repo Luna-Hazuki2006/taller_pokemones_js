@@ -114,6 +114,17 @@ header li a:hover {
     padding: 10px;
 }
 
+.cambios {
+    text-align: left;
+    background-color: cornflowerblue;
+    border: 2px solid turquoise;
+    color: cornsilk;
+    font-family: cursive;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 10px;
+}
+
 .ingresar:hover {
     cursor: pointer;
 }
