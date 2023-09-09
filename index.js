@@ -1,5 +1,7 @@
 function cargar() {
     let form = document.querySelector('form')
+    let boton = document.querySelector('form button')
+    boton.classList.add('ingresar')
     form.addEventListener('submit', async (event) => {
         event.preventDefault()
         let data = new FormData(form)

@@ -1,5 +1,7 @@
 function cargar() {
     let form = document.querySelector('form')
+    let boton = document.querySelector('form button')
+    boton.classList.add('ingresar')
     form.addEventListener('submit', async (event) => {
         event.preventDefault()
         let data = new FormData(form)
@@ -35,6 +37,8 @@ function cargar() {
 }
 
 async function prueba() {
+    // Probablemente no vuelva a usar este código pero...
+    // No lo quiero borrar :(
     console.log('inicio');
     fetch('https://graco-api.onrender.com/registrar', {
         method: "POST", 

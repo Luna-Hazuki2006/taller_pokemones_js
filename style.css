@@ -15,6 +15,10 @@ legend {
     text-align: center;
 }
 
+input {
+    width: 100%;
+}
+
 header {
     padding-bottom: 20px;
 }
@@ -73,4 +77,9 @@ header li a:hover {
 
 .invisible {
     visibility: hidden;
+}
+
+.ingresar {
+    width: 100%;
+    text-align: center;
 }
