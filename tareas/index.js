@@ -45,8 +45,22 @@ async function consultarPokedex() {
 }
 
 function mostrarPokedex() {
-    vistaPokedex.innerHTML = ''
-    for (const pokemon of pokedex) {
+    llenado(vistaPokedex, pokedex)
+    let texto = document.querySelector('#encontrar input')
+    texto.addEventListener('keyup', () => {
+        let buscar = texto.value
+        console.log(buscar);
+        let lista = pokedex.filter((poke) => String(poke['name']).includes(buscar) || 
+                                            String(poke['id']).includes(buscar) || 
+                                            String(poke['type']).includes(buscar))
+        llenado(vistaPokedex, lista)
+        console.log(lista);
+    })
+}
+
+function llenado(origen, lista) {
+    origen.innerHTML = ''
+    for (const pokemon of lista) {
         let div = document.createElement('div')
         div.id = pokemon['id']
         div.addEventListener('click', () => {
@@ -70,24 +84,8 @@ function mostrarPokedex() {
                 break;
         }
         div.appendChild(img)
-        vistaPokedex.appendChild(div)
-    }
-    let encontrar = document.getElementById('encontrar')
-    let data = new FormData(encontrar)
-    let busqueda = data.get('buscar')
-    let boton = document.querySelector('#encontrar button')
-    boton.addEventListener('click', (event) => {
-        event.preventDefault()
-        for (const esto of pokedex) {
-            if (String(esto['name']).includes(busqueda) || 
-                String(esto['id'].includes(busqueda)) || 
-                String(esto['type']).includes(busqueda)) {
-                let nuevo = document.getElementById(esto['id'])
-                console.log(nuevo);
-                nuevo.classList.add('encontrado')
-            }
-        }
-    })
+        origen.appendChild(div)
+    } 
 }
 
 async function encontrarPokemon() {
@@ -131,6 +129,9 @@ async function atraparPokemon(id) {
                 'estado': 2
             })
         })
+        if (respuesta['success']) {
+            
+        }
         const pokemon = await respuesta.json()
         console.log('Esto es el pokemon');
         console.log(pokemon);
