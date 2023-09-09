@@ -1,5 +1,6 @@
 let pokedex = []
 let vistaPokedex = document.getElementById('pokedex')
+vistaPokedex.classList.add('invisible')
 
 async function cargar() {
     if (localStorage.getItem('token') == undefined || 
@@ -12,6 +13,12 @@ async function cargar() {
     console.log(bottonAtrapar);
     bottonAtrapar.addEventListener('click', async () => {
         await encontrarPokemon()
+    })
+    let botonMostrar = document.querySelector('section:nth-child(3) button')
+    console.log(botonMostrar);
+    botonMostrar.addEventListener('click', () => {
+        console.log('desaparecer');
+        vistaPokedex.classList.toggle('invisible')
     })
 }
 
@@ -89,11 +96,12 @@ async function atraparPokemon(id) {
         const respuesta = await fetch('https://graco-api.onrender.com/atrapar', {
             method: 'PUT', 
             headers: {
-                'Authorization': localStorage.getItem('token')
+                'Authorization': localStorage.getItem('token'), 
+                "Content-Type": "application/json"
             }, 
             body: JSON.stringify({
                 'id': id, 
-                'estado': '2'
+                'estado': 2
             })
         })
         // const pokemon = await respuesta.json()

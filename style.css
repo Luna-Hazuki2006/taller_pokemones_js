@@ -6,6 +6,15 @@ fieldset {
     border-radius: 10px;
 }
 
+form {
+    margin: 0 auto;
+    width: 60%;
+}
+
+legend {
+    text-align: center;
+}
+
 header {
     padding-bottom: 20px;
 }
@@ -42,6 +51,7 @@ header li a:hover {
     padding: 30px;
     border: 2px dotted brown;
     border-radius: 10px;
+    margin-top: 30px;
 }
 
 #pokedex div {
@@ -59,4 +69,8 @@ header li a:hover {
 
 .presente {
     background-image: radial-gradient(lavenderBlush, yellow);   
+}
+
+.invisible {
+    visibility: hidden;
 }
