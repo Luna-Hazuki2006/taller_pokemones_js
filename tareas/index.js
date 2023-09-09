@@ -149,6 +149,7 @@ function consultarPokemon(id) {
     if (pokemon['estado'] == '0') {
         let div = document.createElement('div')
         div.classList.add('pokemon')
+        div.classList.add('triste')
         let h3 = document.createElement('h3')
         h3.innerText = pokemon['name']
         div.appendChild(h3)

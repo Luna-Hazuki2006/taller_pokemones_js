@@ -162,3 +162,31 @@ header li a:hover {
 .pokemon h3, .pokemon p {
     border-bottom: 1px solid wheat;
 }
+
+.triste {
+    background-color: grey;
+}
+
+.triste div:last-child {
+    border-radius: 10px;
+}
+
+#encontrar {
+    margin: 0;
+    width: 50%;
+}
+
+#encontrar input {
+    margin-top: 5px;
+}
+
+#encontrar button {
+    text-align: center;
+    background-color: cornflowerblue;
+    border: 2px solid turquoise;
+    color: cornsilk;
+    font-family: cursive;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 10px;
+}
