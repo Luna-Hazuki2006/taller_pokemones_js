@@ -45,9 +45,10 @@ function mostrarPokedex() {
         let div = document.createElement('div')
         let img = document.createElement('img')
         img.src = pokemon['image']
-        if (String(pokemon['estado']) == '0') {
+        if (String(pokemon['estado']) == '0' || 
+            String(pokemon['estado']) == '1') {
             div.classList.add('ocultar')
-        } else if (String(pokemon['estado']) == '1') {
+        } else {
             div.classList.add('presente')
         }
         div.appendChild(img)
@@ -95,22 +96,24 @@ async function atraparPokemon(id) {
                 'estado': '2'
             })
         })
-        const pokemon = await respuesta.json()
-        console.log('Esto es el pokemon');
-        console.log(pokemon);
-        console.log('felicidades');
-        alert('felicidades, atrapaste un pokemón')
-        await consultarPokedex()   
-        // if (respuesta['success']) {
-        //     const pokemon = await respuesta.json()
-        //     console.log(pokemon);
-        //     console.log('felicidades');
-        //     alert('felicidades, atrapaste un pokemón')
-        //     await consultarPokedex()
-        // } else {
-        //     alert('¡Oh no! El pokemón escapó :(')
-        //     console.log('Se escapó :(');
-        // }
+        // const pokemon = await respuesta.json()
+        // console.log('Esto es el pokemon');
+        // console.log(pokemon);
+        // console.log('felicidades');
+        // alert('felicidades, atrapaste un pokemón')
+        // await consultarPokedex()   
+        if (respuesta['success']) {
+            const pokemon = await respuesta.json()
+            console.log(pokemon);
+            console.log('felicidades');
+            alert('felicidades, atrapaste un pokemón')
+            await consultarPokedex()
+        } else {
+            const pokemon = await respuesta.json()
+            console.log(pokemon);
+            alert('¡Oh no! El pokemón escapó :(')
+            console.log('Se escapó :(');
+        }
     } catch (error) {
         console.error(error)
         alert('Oh no, el pokemon escapó')
