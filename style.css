@@ -11,12 +11,19 @@ form {
     width: 60%;
 }
 
+form p {
+    text-align: center;
+}
+
 legend {
     text-align: center;
 }
 
 input {
-    width: 100%;
+    width: 98%;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid gray;
 }
 
 header {
@@ -75,6 +82,22 @@ header li a:hover {
     background-image: radial-gradient(lavenderBlush, yellow);   
 }
 
+.presente:hover {
+    cursor: pointer;
+}
+
+.ausente {
+    background-image: radial-gradient(lavenderBlush, yellow);
+}
+
+.ausente:hover {
+    cursor: pointer;
+}
+
+.ausente img {
+    filter: brightness(0%);
+}
+
 .invisible {
     visibility: hidden;
 }
@@ -82,4 +105,16 @@ header li a:hover {
 .ingresar {
     width: 100%;
     text-align: center;
+    background-color: cornflowerblue;
+    border: 2px solid turquoise;
+    color: cornsilk;
+    font-family: cursive;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 10px;
 }
+
+.ingresar:hover {
+    cursor: pointer;
+}
+

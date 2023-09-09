@@ -1,6 +1,6 @@
 let pokedex = []
 let vistaPokedex = document.getElementById('pokedex')
-vistaPokedex.classList.add('invisible')
+// vistaPokedex.classList.add('invisible')
 
 async function cargar() {
     if (localStorage.getItem('token') == undefined || 
@@ -14,12 +14,11 @@ async function cargar() {
     bottonAtrapar.addEventListener('click', async () => {
         await encontrarPokemon()
     })
-    let botonMostrar = document.querySelector('section:nth-child(3) button')
-    console.log(botonMostrar);
-    botonMostrar.addEventListener('click', () => {
-        console.log('desaparecer');
-        vistaPokedex.classList.toggle('invisible')
-    })
+    // let botonMostrar = document.querySelector('section:nth-child(4) button')
+    // console.log(botonMostrar);
+    // botonMostrar.addEventListener('click', () => {
+    //     vistaPokedex.classList.toggle('invisible')
+    // })
 }
 
 async function consultarPokedex() {
@@ -47,16 +46,26 @@ async function consultarPokedex() {
 
 function mostrarPokedex() {
     vistaPokedex.innerHTML = ''
-    let indices = Object.keys(pokedex[0])
     for (const pokemon of pokedex) {
         let div = document.createElement('div')
+        div.id = pokemon['id']
         let img = document.createElement('img')
         img.src = pokemon['image']
-        if (String(pokemon['estado']) == '0' || 
-            String(pokemon['estado']) == '1') {
-            div.classList.add('ocultar')
-        } else {
-            div.classList.add('presente')
+        switch (String(pokemon['estado'])) {
+            case '0':
+                div.classList.add('ocultar')
+                div.addEventListener('click', consultarPokemon, div.id)
+                break;
+            case '1': 
+                div.classList.add('ausente')
+                div.addEventListener('click', consultarPokemon, div.id)
+                break
+            case '2': 
+                div.classList.add('presente')
+                break
+            default:
+                console.log('Algo está MUY mal');
+                break;
         }
         div.appendChild(img)
         vistaPokedex.appendChild(div)
@@ -104,40 +113,32 @@ async function atraparPokemon(id) {
                 'estado': 2
             })
         })
-        // const pokemon = await respuesta.json()
-        // console.log('Esto es el pokemon');
-        // console.log(pokemon);
-        // console.log('felicidades');
-        // alert('felicidades, atrapaste un pokemón')
-        // await consultarPokedex()   
-        if (respuesta['success']) {
-            const pokemon = await respuesta.json()
-            console.log(pokemon);
-            console.log('felicidades');
-            alert('felicidades, atrapaste un pokemón')
-            await consultarPokedex()
-        } else {
-            const pokemon = await respuesta.json()
-            console.log(pokemon);
-            alert('¡Oh no! El pokemón escapó :(')
-            console.log('Se escapó :(');
-        }
+        const pokemon = await respuesta.json()
+        console.log('Esto es el pokemon');
+        console.log(pokemon);
+        console.log('felicidades');
+        alert('felicidades, atrapaste un pokemón')
+        await consultarPokedex()   
+        // if (respuesta['success']) {
+        //     const pokemon = await respuesta.json()
+        //     console.log(pokemon);
+        //     console.log('felicidades');
+        //     alert('felicidades, atrapaste un pokemón')
+        //     await consultarPokedex()
+        // } else {
+        //     const pokemon = await respuesta.json()
+        //     console.log(pokemon);
+        //     alert('¡Oh no! El pokemón escapó :(')
+        //     console.log('Se escapó :(');
+        // }
     } catch (error) {
         console.error(error)
         alert('Oh no, el pokemon escapó')
     }
 }
 
-async function prueba() {
-    console.log('inicio');
-    fetch('https://graco-api.onrender.com/registrar', {
-        method: "POST", 
-        headers: {
-            "Content-Type": "application/json" 
-        }, 
-        body: JSON.stringify({ "email": "ggimenez", "password": "1" }) 
-    }).then(r=> r.json()).then(r=> console.log(r))
-    console.log('final');
+function consultarPokemon(id) {
+    
 }
 
 cargar()
