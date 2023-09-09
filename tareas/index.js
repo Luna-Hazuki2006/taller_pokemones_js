@@ -118,21 +118,17 @@ async function atraparPokemon(id) {
         const pokemon = await respuesta.json()
         console.log('Esto es el pokemon');
         console.log(pokemon);
-        console.log('felicidades');
-        alert('felicidades, atrapaste un pokemón')
-        await consultarPokedex()   
-        // if (respuesta['success']) {
-        //     const pokemon = await respuesta.json()
-        //     console.log(pokemon);
-        //     console.log('felicidades');
-        //     alert('felicidades, atrapaste un pokemón')
-        //     await consultarPokedex()
-        // } else {
-        //     const pokemon = await respuesta.json()
-        //     console.log(pokemon);
-        //     alert('¡Oh no! El pokemón escapó :(')
-        //     console.log('Se escapó :(');
-        // }
+        await consultarPokedex()
+        for (const esto of pokedex) {
+            if (esto['id'] == id && 
+                esto['estado'] == 2) {
+                console.log('felicidades');
+                alert('felicidades, atrapaste un pokemón')
+                return
+            }
+        }
+        alert('¡Oh no! El pokemón escapó :(')
+        console.log('Se escapó :(');
     } catch (error) {
         console.error(error)
         alert('Oh no, el pokemon escapó')
