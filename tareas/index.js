@@ -214,7 +214,13 @@ function consultarPokemon(id) {
         p.innerText = pokemon['id']
         div.appendChild(p)
         p = document.createElement('p')
-        p.innerText = pokemon['type']
+        let ul = document.createElement('ul')
+        for (const esto of String(pokemon['type']).split(',')) {
+            let li = document.createElement('li')
+            li.innerText = esto
+            ul.appendChild(li)
+        }
+        p.appendChild(ul)
         div.appendChild(p)
         let div2 = document.createElement('div')
         p = document.createElement('p')
