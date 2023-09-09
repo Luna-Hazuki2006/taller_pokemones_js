@@ -49,16 +49,18 @@ function mostrarPokedex() {
     for (const pokemon of pokedex) {
         let div = document.createElement('div')
         div.id = pokemon['id']
+        div.addEventListener('click', () => {
+            consultarPokemon(div.id)
+            location.href = '#consulta'
+        })
         let img = document.createElement('img')
         img.src = pokemon['image']
         switch (String(pokemon['estado'])) {
             case '0':
                 div.classList.add('ocultar')
-                div.addEventListener('click', consultarPokemon, div.id)
                 break;
             case '1': 
                 div.classList.add('ausente')
-                div.addEventListener('click', consultarPokemon, div.id)
                 break
             case '2': 
                 div.classList.add('presente')
@@ -138,7 +140,98 @@ async function atraparPokemon(id) {
 }
 
 function consultarPokemon(id) {
-    
+    console.log(id);
+    let pokemon = null
+    for (const esto of pokedex) {
+        if (esto['id'] == id) {
+            pokemon = esto
+            break
+        }
+    }
+    let consulta = document.getElementById('consulta')
+    consulta.innerHTML = ''
+    if (pokemon['estado'] == '0') {
+        let div = document.createElement('div')
+        div.classList.add('pokemon')
+        let h3 = document.createElement('h3')
+        h3.innerText = pokemon['name']
+        div.appendChild(h3)
+        let p = document.createElement('p')
+        p.innerText = pokemon['id']
+        div.appendChild(p)
+        p = document.createElement('p')
+        p.innerText = pokemon['type']
+        div.appendChild(p)
+        let div2 = document.createElement('div')
+        p = document.createElement('p')
+        p.innerText = pokemon['height']
+        div2.appendChild(p)
+        p = document.createElement('p')
+        p.innerText = pokemon['weight']
+        div2.appendChild(p)
+        div.appendChild(div2)
+        let div3 = document.createElement('div')
+        let img = document.createElement('img')
+        img.src = pokemon['image']
+        div3.appendChild(img)
+        div3.classList.add('ocultar')
+        div.appendChild(div3)
+        consulta.appendChild(div)
+    } else if (pokemon['estado'] == '1') {
+        let div = document.createElement('div')
+        div.classList.add('pokemon')
+        let h3 = document.createElement('h3')
+        h3.innerText = pokemon['name']
+        div.appendChild(h3)
+        let p = document.createElement('p')
+        p.innerText = pokemon['id']
+        div.appendChild(p)
+        p = document.createElement('p')
+        p.innerText = pokemon['type']
+        div.appendChild(p)
+        let div2 = document.createElement('div')
+        p = document.createElement('p')
+        p.innerText = pokemon['height']
+        div2.appendChild(p)
+        p = document.createElement('p')
+        p.innerText = pokemon['weight']
+        div2.appendChild(p)
+        div.appendChild(div2)
+        let div3 = document.createElement('div')
+        let img = document.createElement('img')
+        img.src = pokemon['image']
+        div3.appendChild(img)
+        div3.classList.add('ausente')
+        div.appendChild(div3)
+        consulta.appendChild(div)
+    } else if (pokemon['estado'] == '2') {
+        let div = document.createElement('div')
+        div.classList.add('pokemon')
+        let h3 = document.createElement('h3')
+        h3.innerText = pokemon['name']
+        div.appendChild(h3)
+        let p = document.createElement('p')
+        p.innerText = pokemon['id']
+        div.appendChild(p)
+        p = document.createElement('p')
+        p.innerText = pokemon['type']
+        div.appendChild(p)
+        let div2 = document.createElement('div')
+        p = document.createElement('p')
+        p.innerText = 'Altura: ' + pokemon['height']
+        div2.appendChild(p)
+        p = document.createElement('p')
+        p.innerText = 'Peso: ' + pokemon['weight']
+        div2.appendChild(p)
+        div.appendChild(div2)
+        let div3 = document.createElement('div')
+        let img = document.createElement('img')
+        img.src = pokemon['image']
+        div3.appendChild(img)
+        div3.classList.add('presente')
+        div.appendChild(div3)
+        consulta.appendChild(div)
+    }
 }
 
 cargar()
