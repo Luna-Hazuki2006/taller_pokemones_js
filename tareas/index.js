@@ -7,6 +7,7 @@ async function cargar() {
         localStorage.getItem('token') == null) {
         alert('Necesita iniciar sesión para acceder aquí, lo siento :(')
         location.href = '../'
+        return
     }
     await consultarPokedex()
     let bottonAtrapar = document.querySelector('#atrapar button')
@@ -39,6 +40,7 @@ async function consultarPokedex() {
         mostrarPokedex()
     } catch (error) {
         console.error(error)
+        localStorage.removeItem('token')
         alert('Disculpa, ocurrió un error al atrapar al pokemón\nTrata de iniciar sesión de nuevo')
         location.href = '../'
     } 
