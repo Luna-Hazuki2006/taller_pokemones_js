@@ -25,7 +25,7 @@ function cargar() {
                 localStorage.setItem('token', jwt)
                 console.log('felicidades');
                 alert('Felicidades, inicio de sesión exitoso')
-                location.href = '/tareas/'   
+                location.href = '/tareas/' 
             } else {
                 console.log('¡Oh no! No pudiste iniciar sesión');
                 alert('¡Oh no! parece que hubo un problema para iniciar sesión')
