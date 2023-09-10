@@ -83,6 +83,8 @@ function llenado(origen, lista) {
                 break
             default:
                 console.log('Algo está MUY mal');
+                alert('Un error a sucedido pero no te preocupes, no es tu culpa :(')
+                location.href = '../'
                 break;
         }
         div.appendChild(img)

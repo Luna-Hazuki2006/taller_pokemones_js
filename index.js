@@ -26,6 +26,9 @@ function cargar() {
                 console.log('felicidades');
                 alert('Felicidades, inicio de sesión exitoso')
                 location.href = '/tareas/'   
+            } else {
+                console.log('¡Oh no! No pudiste iniciar sesión');
+                alert('¡Oh no! parece que hubo un problema para iniciar sesión')
             }
         } catch (error) {
             console.error(error)
