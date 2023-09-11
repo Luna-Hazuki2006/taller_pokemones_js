@@ -318,6 +318,9 @@ function consultarPokemon(id) {
         div.appendChild(div3)
         consulta.appendChild(div)
     }
+    let detalles = document.querySelector('details')
+    detalles.setAttribute('open', '')
+    location.href = '#' + consulta.id
 }
 
 cargar()
