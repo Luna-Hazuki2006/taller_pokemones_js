@@ -121,6 +121,11 @@ async function encontrarPokemon() {
 function escapar() {
     let contenedor = atrapar.querySelector('div:nth-of-type(3)')
     contenedor.classList.add('invisible')
+    let botones = contenedor.querySelectorAll('button')
+    for (const este of botones) {
+        let nuevo = este.cloneNode(true)
+        este.parentNode.replaceChild(nuevo, este)
+    }
 }
 
 function encontrar(poke) {
@@ -152,6 +157,7 @@ function encontrar(poke) {
         contenedor.classList.add('invisible')
         await consultarPokedex()
     })
+    console.log('final');
 }
 
 async function atraparPokemon(id) {
@@ -170,6 +176,8 @@ async function atraparPokemon(id) {
                 'estado': 2
             })
         })
+        console.log('la respuesta');
+        console.log(respuesta);
         const pokemon = await respuesta.json()
         if (pokemon['success']) {
             await consultarPokedex()
@@ -181,6 +189,7 @@ async function atraparPokemon(id) {
         } else {
             alert('¡Oh no! El pokemón escapó :(')
             console.log('Se escapó :(');
+            escapar()
         }
     } catch (error) {
         console.error(error)
@@ -212,9 +221,7 @@ function mostrar(id) {
     let img = div.querySelector('img')
     img.src = (poke['imagen']) ? poke['imagen'] : poke['image']
     div.classList.add('presente')
-    div = atrapar.querySelector('div:nth-of-type(3)')
-    div.classList.add('invisible')
-    let botones = div.que
+    escapar()
 }
 
 function consultarPokemon(id) {
