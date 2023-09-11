@@ -159,6 +159,7 @@ details {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .cambios button {
@@ -176,7 +177,7 @@ details {
     cursor: pointer;
 }
 
-.multiples {
+#multiples {
     margin: 0 auto;
     width: 50%;
     min-width: 200px;

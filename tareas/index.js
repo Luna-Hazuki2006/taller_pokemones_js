@@ -1,6 +1,7 @@
 let pokedex = []
 let vistaPokedex = document.getElementById('pokedex')
 let pokebola = document.getElementById('pokebola')
+let atrapar = document.getElementById('atrapar')
 
 async function cargar() {
     if (localStorage.getItem('token') == undefined || 
@@ -10,9 +11,8 @@ async function cargar() {
         return
     }
     await consultarPokedex()
-    let bottonAtrapar = document.querySelector('#atrapar button')
-    console.log(bottonAtrapar);
-    bottonAtrapar.addEventListener('click', async () => {
+    let multiples = document.querySelector('#multiples button')
+    multiples.addEventListener('click', async () => {
         await encontrarPokemon()
     })
 }
@@ -105,16 +105,53 @@ async function encontrarPokemon() {
             console.log(pokemon['data']);
             console.log('felicidades');
             alert('felicidades, te econtraste con un pokemón')
-            await atraparPokemon(pokemon['data']['id'])
+            encontrar(pokemon['data'])
         } else {
             console.log('No se pudo encontrar el pokemon');
             alert('¡Oh no! no pudiste encontrar un pokemon')
+            escapar()
         }
     } catch (error) {
         console.error(error)
         alert('Disculpa, ocurrió un error al atrapar al pokemón\nTrata de iniciar sesión de nuevo')
     }
     pokebola.classList.add('invisible')
+}
+
+function escapar() {
+    let contenedor = atrapar.querySelector('div:nth-of-type(3)')
+    contenedor.classList.add('invisible')
+}
+
+function encontrar(poke) {
+    atrapar.classList.add('triste')
+    let h3 = atrapar.querySelector('h3')
+    h3.innerText = '????'
+    let p = atrapar.querySelectorAll('p')
+    p[0].innerText = poke['id']
+    p[1].innerHTML = '????'
+    let p2 = atrapar.querySelectorAll('div:first-of-type p')
+    p2[0].innerHTML = '????'
+    p2[1].innerHTML = '????'
+    let div = atrapar.querySelector('div:nth-of-type(2)')
+    div.classList.add('ocultar')
+    div.classList.remove('presente')
+    div.innerHTML = ''
+    let img = document.createElement('img')
+    img.src = (poke['imagen']) ? poke['imagen'] : poke['image']
+    div.appendChild(img)
+    let contenedor = atrapar.querySelector('div:nth-of-type(3)')
+    contenedor.classList.remove('invisible')
+    let botones = contenedor.querySelectorAll('button')
+    botones[0].addEventListener('click', async () => {
+        await atraparPokemon(poke['id'])
+    })
+    botones[1].addEventListener('click', async () => {
+        p[0].innerText = '????'
+        div.innerHTML = ''
+        contenedor.classList.add('invisible')
+        await consultarPokedex()
+    })
 }
 
 async function atraparPokemon(id) {
@@ -132,38 +169,55 @@ async function atraparPokemon(id) {
                 'estado': 2
             })
         })
-        if (respuesta['success']) {
-            
-        }
         const pokemon = await respuesta.json()
-        console.log('Esto es el pokemon');
-        console.log(pokemon);
-        await consultarPokedex()
-        for (const esto of pokedex) {
-            if (esto['id'] == id && 
-                esto['estado'] == 2) {
-                console.log('felicidades');
-                alert('felicidades, atrapaste un pokemón')
-                return
-            }
+        if (pokemon['success']) {
+            await consultarPokedex()
+            console.log('Esto es el pokemon');
+            console.log(pokemon);
+            console.log('felicidades');
+            alert('felicidades, atrapaste un pokemón')
+            mostrar(id)
+        } else {
+            alert('¡Oh no! El pokemón escapó :(')
+            console.log('Se escapó :(');
         }
-        alert('¡Oh no! El pokemón escapó :(')
-        console.log('Se escapó :(');
     } catch (error) {
         console.error(error)
-        alert('Oh no, el pokemon escapó')
+        alert('Ha ocurrido un error al atrapar')
     }
+}
+
+function mostrar(id) {
+    let poke = pokedex.find((p) => p['id'] == id)
+    console.log(poke);
+    atrapar.classList.remove('triste')
+    let h3 = atrapar.querySelector('h3')
+    h3.innerText = poke['name']
+    let p = atrapar.querySelectorAll('p')
+    p[0].innerText = poke['id']
+    p[1].innerText = ''
+    let ul = document.createElement('ul')
+    for (const esto of String(poke['type']).split(',')) {
+        let li = document.createElement('li')
+        li.innerText = esto
+        ul.appendChild(li)
+    }
+    p[1].appendChild(ul)
+    p = atrapar.querySelectorAll('div:first-of-type p')
+    p[0].innerText = 'Altura: ' + poke['height']
+    p[1].innerText = 'Peso: ' + poke['weight']
+    let div = atrapar.querySelector('div:nth-of-type(2)')
+    div.classList.remove('ocultar')
+    let img = div.querySelector('img')
+    img.src = (poke['imagen']) ? poke['imagen'] : poke['image']
+    div.classList.add('presente')
+    div = atrapar.querySelector('div:nth-of-type(3)')
+    div.classList.add('invisible')
 }
 
 function consultarPokemon(id) {
     console.log(id);
-    let pokemon = null
-    for (const esto of pokedex) {
-        if (esto['id'] == id) {
-            pokemon = esto
-            break
-        }
-    }
+    let pokemon = pokedex.find((poke) => poke['id'] == id)
     let consulta = document.getElementById('consulta')
     consulta.innerHTML = ''
     if (pokemon['estado'] == '0') {
