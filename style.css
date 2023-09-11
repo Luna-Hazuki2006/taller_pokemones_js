@@ -106,6 +106,10 @@ fieldset {
     border-radius: 10px;
 }
 
+h1 {
+    text-align: center;
+}
+
 form {
     margin: 0 auto;
     width: 60%;
@@ -350,5 +354,16 @@ details {
     to {
         top:0; 
         opacity: 1;
+    }
+}
+
+@-webkit-keyframes animartop {
+    from {
+        top:-300px; 
+        opacity:0; 
+    } 
+    to {
+        top:0; 
+        opacity:1;
     }
 }
