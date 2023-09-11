@@ -155,6 +155,7 @@ function encontrar(poke) {
 }
 
 async function atraparPokemon(id) {
+    console.log(id);
     try {
         console.log('vas atrapar un pokemon');
         alert('Pero... ¿Atraparás al pokemon?')
@@ -213,6 +214,7 @@ function mostrar(id) {
     div.classList.add('presente')
     div = atrapar.querySelector('div:nth-of-type(3)')
     div.classList.add('invisible')
+    let botones = div.que
 }
 
 function consultarPokemon(id) {
