@@ -1,9 +1,24 @@
+let mensaje = document.getElementById('modal')
+let boton = mensaje.querySelector('div div:last-of-type button')
+boton.addEventListener('click', () => {
+    mensaje.style.display = 'none'
+})
+
+window.onclick = function(event) {
+    if (event.target == mensaje) {
+        mensaje.style.display = "none";
+    }
+}
+
 function cargar() {
     let form = document.querySelector('form')
     let boton = document.querySelector('form button')
     boton.classList.add('ingresar')
+    let pokebola = document.querySelector('#pokebola')
+    pokebola.classList.add('invisible')
     form.addEventListener('submit', async (event) => {
         event.preventDefault()
+        pokebola.classList.remove('invisible')
         let data = new FormData(form)
         let nombre = data.get('nombre')
         let apellido = data.get('apellido')
@@ -24,16 +39,25 @@ function cargar() {
             })
             const verdad = await respuesta.json()
             if (verdad['success']) {
+                pokebola.classList.add('invisible')
                 console.log(verdad);
                 console.log('felicidades');
-                alert('Felicidades, usuario registrado')
+                modal('Felicidades, usuario registrado')
                 location.href = '../'   
             }
         } catch (error) {
             console.error(error)
-            alert('Ha sucedido un error pero no preocupes, no es tu culpa :D')
+            modal('Ha sucedido un error pero no preocupes, no es tu culpa :D')
+            pokebola.classList.add('invisible')
         }
     })
+}
+
+function modal(texto) {
+    let p = mensaje.querySelector('div div:first-of-type p')
+    console.log(texto);
+    p.innerHTML = texto
+    mensaje.style.display = 'block'
 }
 
 async function prueba() {

@@ -2,11 +2,22 @@ let pokedex = []
 let vistaPokedex = document.getElementById('pokedex')
 let pokebola = document.getElementById('pokebola')
 let atrapar = document.getElementById('atrapar')
+let mensaje = document.getElementById('modal')
+let boton = mensaje.querySelector('div div:last-of-type button')
+boton.addEventListener('click', () => {
+    mensaje.style.display = 'none'
+})
+
+window.onclick = function(event) {
+    if (event.target == mensaje) {
+        mensaje.style.display = "none";
+    }
+}
 
 async function cargar() {
     if (localStorage.getItem('token') == undefined || 
         localStorage.getItem('token') == null) {
-        alert('Necesita iniciar sesión para acceder aquí, lo siento :(')
+        modal('Necesita iniciar sesión para acceder aquí, lo siento :(')
         location.href = '../'
         return
     }
@@ -37,7 +48,7 @@ async function consultarPokedex() {
     } catch (error) {
         console.error(error)
         localStorage.removeItem('token')
-        alert('Disculpa, ocurrió un error al atrapar al pokemón\nTrata de iniciar sesión de nuevo')
+        modal('Disculpa, ocurrió un error al atrapar al pokemón\nTrata de iniciar sesión de nuevo')
         location.href = '../'
     }
     pokebola.classList.add('invisible')
@@ -80,7 +91,7 @@ function llenado(origen, lista) {
                 break
             default:
                 console.log('Algo está MUY mal');
-                alert('Un error a sucedido pero no te preocupes, no es tu culpa :(')
+                modal('Un error a sucedido pero no te preocupes, no es tu culpa :(')
                 location.href = '../'
                 break;
         }
@@ -104,16 +115,16 @@ async function encontrarPokemon() {
             console.log(pokemon);
             console.log(pokemon['data']);
             console.log('felicidades');
-            alert('felicidades, te econtraste con un pokemón')
+            modal('felicidades, te econtraste con un pokemón')
             encontrar(pokemon['data'])
         } else {
             console.log('No se pudo encontrar el pokemon');
-            alert('¡Oh no! no pudiste encontrar un pokemon')
+            modal('¡Oh no! no pudiste encontrar un pokemon')
             escapar()
         }
     } catch (error) {
         console.error(error)
-        alert('Disculpa, ocurrió un error al atrapar al pokemón\nTrata de iniciar sesión de nuevo')
+        modal('Disculpa, ocurrió un error al atrapar al pokemón\nTrata de iniciar sesión de nuevo')
     }
     pokebola.classList.add('invisible')
 }
@@ -164,7 +175,7 @@ async function atraparPokemon(id) {
     console.log(id);
     try {
         console.log('vas atrapar un pokemon');
-        alert('Pero... ¿Atraparás al pokemon?')
+        modal('Pero... ¿Atraparás al pokemon?')
         const respuesta = await fetch('https://graco-api.onrender.com/atrapar', {
             method: 'PUT', 
             headers: {
@@ -184,16 +195,16 @@ async function atraparPokemon(id) {
             console.log('Esto es el pokemon');
             console.log(pokemon);
             console.log('felicidades');
-            alert('felicidades, atrapaste un pokemón')
+            modal('felicidades, atrapaste un pokemón')
             mostrar(id)
         } else {
-            alert('¡Oh no! El pokemón escapó :(')
+            modal('¡Oh no! El pokemón escapó :(')
             console.log('Se escapó :(');
             escapar()
         }
     } catch (error) {
         console.error(error)
-        alert('Ha ocurrido un error al atrapar')
+        modal('Ha ocurrido un error al atrapar')
     }
 }
 
@@ -321,6 +332,13 @@ function consultarPokemon(id) {
     let detalles = document.querySelector('details')
     detalles.setAttribute('open', '')
     location.href = '#' + consulta.id
+}
+
+function modal(texto) {
+    let p = mensaje.querySelector('div div:first-of-type p')
+    console.log(texto);
+    p.innerHTML = texto
+    mensaje.style.display = 'block'
 }
 
 cargar()
