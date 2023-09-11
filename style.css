@@ -156,6 +156,12 @@ details {
 }
 
 .cambios {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.cambios button {
     text-align: left;
     background-color: cornflowerblue;
     border: 2px solid turquoise;
@@ -166,8 +172,15 @@ details {
     padding: 10px;
 }
 
-.ingresar:hover {
+.ingresar:hover, .cambios button:hover {
     cursor: pointer;
+}
+
+.multiples {
+    margin: 0 auto;
+    width: 50%;
+    min-width: 200px;
+    max-width: 400px;
 }
 
 .pokemon {

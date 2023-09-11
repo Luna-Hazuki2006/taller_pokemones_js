@@ -26,7 +26,10 @@
     </header>
     <section>
         <h3>Atrapar pokemón aleatorio</h3>
-        <div id="atrapar">
+        <div class="multiples">
+            <button type="button" class="ingresar">¡Buscar nuevo pokemon!</button>
+        </div>
+        <div id="atrapar" class="pokemon triste">
             <h3>????</h3>
             <p>????</p>
             <p>????</p>
@@ -35,7 +38,10 @@
                 <p>????</p>
             </div>
             <div></div>
-            <button type="button">¡Atrapar!</button>
+            <div class="cambios">
+                <button type="button">¡Atrapar!</button>
+                <button type="button">¡Dejar ir!</button>
+            </div>
         </div>
     </section>
     <section>
@@ -47,14 +53,11 @@
     </section>
     <section>
         <h3>Pokedex</h3>
-        <!-- <summary></summary> -->
-        <!-- <button type="button">Mostrar Pokedex</button> -->
         <form id="encontrar">
             <fieldset>
                 <legend>Búsqueda de pokemones</legend>
                 <label for="buscar">Pokemon (puede ser nombre, tipo o número): </label>
                 <input type="text" name="buscar" id="buscar"><br><br>
-                <!-- <button type="submit">Buscar pokemon</button> -->
             </fieldset>
         </form>
         <div id="pokedex">

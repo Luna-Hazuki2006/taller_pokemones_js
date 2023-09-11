@@ -1,6 +1,6 @@
 let pokedex = []
 let vistaPokedex = document.getElementById('pokedex')
-// vistaPokedex.classList.add('invisible')
+let pokebola = document.getElementById('pokebola')
 
 async function cargar() {
     if (localStorage.getItem('token') == undefined || 
@@ -15,14 +15,10 @@ async function cargar() {
     bottonAtrapar.addEventListener('click', async () => {
         await encontrarPokemon()
     })
-    // let botonMostrar = document.querySelector('section:nth-child(4) button')
-    // console.log(botonMostrar);
-    // botonMostrar.addEventListener('click', () => {
-    //     vistaPokedex.classList.toggle('invisible')
-    // })
 }
 
 async function consultarPokedex() {
+    pokebola.classList.remove('invisible')
     try {
         console.log('Tu pokedex');
         const respuesta = await fetch('https://graco-api.onrender.com/pokedex', {
@@ -43,7 +39,8 @@ async function consultarPokedex() {
         localStorage.removeItem('token')
         alert('Disculpa, ocurrió un error al atrapar al pokemón\nTrata de iniciar sesión de nuevo')
         location.href = '../'
-    } 
+    }
+    pokebola.classList.add('invisible')
 }
 
 function mostrarPokedex() {
@@ -93,6 +90,7 @@ function llenado(origen, lista) {
 }
 
 async function encontrarPokemon() {
+    pokebola.classList.remove('invisible')
     try {
         console.log('vas a encontrar un pokemon');
         const respuesta = await fetch('https://graco-api.onrender.com/solicitarPokemon', {
@@ -116,6 +114,7 @@ async function encontrarPokemon() {
         console.error(error)
         alert('Disculpa, ocurrió un error al atrapar al pokemón\nTrata de iniciar sesión de nuevo')
     }
+    pokebola.classList.add('invisible')
 }
 
 async function atraparPokemon(id) {
